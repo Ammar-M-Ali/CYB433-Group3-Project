@@ -1,0 +1,15 @@
+{
+  "name": "cyb433-project",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "hardhat test",
+    "coverage": "hardhat coverage"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.1.1",
+    "dotenv": "^16.4.0",
+    "hardhat": "^2.26.0"
+  }
+}
