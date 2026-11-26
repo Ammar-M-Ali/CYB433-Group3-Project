@@ -1,0 +1,64 @@
+Compiled 1 Solidity file successfully (evm target: paris).
+
+  Deed disputes
+    ✔ lets the officer freeze and unfreeze a deed
+    ✔ rejects freezing by an unrelated account
+    ✔ rejects unfreezing by the registrar
+    ✔ rejects freezing a deed that is already frozen
+    ✔ rejects unfreezing a deed that is already active
+    ✔ rejects a transfer proposal while frozen
+    ✔ cancels a pending sale on freeze and blocks acceptance
+    ✔ keeps the cancelled sale unavailable after unfreezing
+
+  Registration
+    ✔ assigns both administrative roles
+    ✔ rejects a zero or repeated role address
+    ✔ registers a new deed and lets the public verify it
+    ✔ rejects registration by an unrelated account
+    ✔ rejects a duplicate plot and preserves its owner
+    ✔ rejects a zero plot ID
+    ✔ rejects an owner with the zero address
+    ✔ rejects an empty document hash
+    ✔ rejects a lookup for an unregistered plot
+
+  Deed transfers
+    ✔ keeps the seller as owner until the buyer accepts
+    ✔ rejects a proposal from someone other than the owner
+    ✔ rejects a second pending sale and preserves the first buyer
+    ✔ rejects a zero buyer address
+    ✔ rejects a seller naming themselves as buyer
+    ✔ rejects the seller attempting to accept
+    ✔ rejects an unrelated account attempting to accept
+    ✔ transfers to the buyer and clears the proposal
+    ✔ rejects accepting a completed sale a second time
+    ✔ rejects transfer proposals for an unregistered plot
+
+  Real estate workflow
+    ✔ preserves the deed hash through a sale and removes the old owner's powers
+    ✔ allows another plot to transfer during a dispute
+    ✔ permits a new sale after the officer resolves the dispute
+
+·----------------------------------------------|---------------------------|-------------|-----------------------------·
+|             [90mSolc version: 0.8.24[39m             ·  [90mOptimizer enabled: true[39m  ·  [90mRuns: 200[39m  ·  [90mBlock limit: 60000000 gas[39m  │
+···············································|···························|·············|······························
+|  [32m[1mMethods[22m[39m                                                                                                             │
+···························|···················|·············|·············|·············|···············|··············
+|  [1mContract[22m                ·  [1mMethod[22m           ·  [32mMin[39m        ·  [32mMax[39m        ·  [32mAvg[39m        ·  [1m# calls[22m      ·  [1musd (avg)[22m  │
+···························|···················|·············|·············|·············|···············|··············
+|  [90mRealEstateDeedRegistry[39m  ·  acceptTransfer   ·          -  ·          -  ·      31416  ·            [90m6[39m  ·          [32m[90m-[32m[39m  │
+···························|···················|·············|·············|·············|···············|··············
+|  [90mRealEstateDeedRegistry[39m  ·  freezeDeed       ·      [36m47972[39m  ·      [31m49972[39m  ·      49172  ·           [90m10[39m  ·          [32m[90m-[32m[39m  │
+···························|···················|·············|·············|·············|···············|··············
+|  [90mRealEstateDeedRegistry[39m  ·  proposeTransfer  ·          -  ·          -  ·      50941  ·           [90m13[39m  ·          [32m[90m-[32m[39m  │
+···························|···················|·············|·············|·············|···············|··············
+|  [90mRealEstateDeedRegistry[39m  ·  registerDeed     ·          -  ·          -  ·      68963  ·           [90m25[39m  ·          [32m[90m-[32m[39m  │
+···························|···················|·············|·············|·············|···············|··············
+|  [90mRealEstateDeedRegistry[39m  ·  unfreezeDeed     ·          -  ·          -  ·      25321  ·            [90m4[39m  ·          [32m[90m-[32m[39m  │
+···························|···················|·············|·············|·············|···············|··············
+|  [32m[1mDeployments[22m[39m                                 ·                                         ·  [1m% of limit[22m   ·             │
+···············································|·············|·············|·············|···············|··············
+|  RealEstateDeedRegistry                      ·          -  ·          -  ·     565574  ·        [90m0.9 %[39m  ·          [32m[90m-[32m[39m  │
+·----------------------------------------------|-------------|-------------|-------------|---------------|-------------·
+
+  30 passing (1s)
+
