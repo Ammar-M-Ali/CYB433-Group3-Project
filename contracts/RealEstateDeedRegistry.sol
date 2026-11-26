@@ -118,4 +118,32 @@ contract RealEstateDeedRegistry {
         deed.pendingBuyer = address(0);
         emit TransferCompleted(plotId, seller, msg.sender);
     }
+
+    error NotDisputeOfficer();
+    error NotFrozen(uint256 plotId);
+
+    event DeedFrozen(uint256 indexed plotId, address indexed cancelledBuyer);
+    event DeedUnfrozen(uint256 indexed plotId);
+
+    modifier onlyDisputeOfficer() {
+        if (msg.sender != disputeOfficer) revert NotDisputeOfficer();
+        _;
+    }
+
+    function freezeDeed(uint256 plotId)
+        external onlyDisputeOfficer knownPlot(plotId) unfrozenPlot(plotId)
+    {
+        Deed storage deed = deeds[plotId];
+        address cancelledBuyer = deed.pendingBuyer;
+        deed.pendingBuyer = address(0);
+        deed.frozen = true;
+        emit DeedFrozen(plotId, cancelledBuyer);
+    }
+
+    function unfreezeDeed(uint256 plotId) external onlyDisputeOfficer knownPlot(plotId) {
+        Deed storage deed = deeds[plotId];
+        if (!deed.frozen) revert NotFrozen(plotId);
+        deed.frozen = false;
+        emit DeedUnfrozen(plotId);
+    }
 }
