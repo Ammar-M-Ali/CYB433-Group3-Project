@@ -4,9 +4,9 @@ pragma solidity ^0.8.20;
 contract RealEstateDeedRegistry {
     struct Deed {
         address owner;
+        bool frozen;
         address pendingBuyer;
         bytes32 docHash;
-        bool frozen;
     }
 
     mapping(uint256 => Deed) private deeds;
