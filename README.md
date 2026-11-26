@@ -171,7 +171,7 @@ The system is an educational prototype deployed on a test network. It does not e
 
 ## AI Usage Disclosure
 
-AI assistance: [Describe the actual AI assistance used for code generation, debugging, testing, and documentation.]
+AI tools were used to assist with drafting, troubleshooting technical issues, and providing relevant sources and references. AI-generated suggestions and code were reviewed and tested by the group members
 
 ## Academic Information
 
