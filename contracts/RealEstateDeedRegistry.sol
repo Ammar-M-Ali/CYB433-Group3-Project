@@ -66,4 +66,56 @@ contract RealEstateDeedRegistry {
         Deed storage deed = deeds[plotId];
         return (deed.owner, deed.docHash, deed.pendingBuyer, deed.frozen);
     }
+
+    error NotPlotOwner();
+    error InvalidBuyer();
+    error SalePending(uint256 plotId);
+    error NoPendingSale(uint256 plotId);
+    error NotPendingBuyer();
+    error FrozenDeed(uint256 plotId);
+
+    event TransferProposed(
+        uint256 indexed plotId, address indexed seller, address indexed buyer
+    );
+    event TransferCompleted(
+        uint256 indexed plotId, address indexed seller, address indexed buyer
+    );
+
+    modifier onlyPlotOwner(uint256 plotId) {
+        if (msg.sender != deeds[plotId].owner) revert NotPlotOwner();
+        _;
+    }
+
+    modifier onlyPendingBuyer(uint256 plotId) {
+        address buyer = deeds[plotId].pendingBuyer;
+        if (buyer == address(0)) revert NoPendingSale(plotId);
+        if (msg.sender != buyer) revert NotPendingBuyer();
+        _;
+    }
+
+    modifier unfrozenPlot(uint256 plotId) {
+        if (deeds[plotId].frozen) revert FrozenDeed(plotId);
+        _;
+    }
+
+    function proposeTransfer(uint256 plotId, address buyer)
+        external knownPlot(plotId) onlyPlotOwner(plotId) unfrozenPlot(plotId)
+    {
+        if (buyer == address(0) || buyer == msg.sender) revert InvalidBuyer();
+        Deed storage deed = deeds[plotId];
+        if (deed.pendingBuyer != address(0)) revert SalePending(plotId);
+
+        deed.pendingBuyer = buyer;
+        emit TransferProposed(plotId, msg.sender, buyer);
+    }
+
+    function acceptTransfer(uint256 plotId)
+        external knownPlot(plotId) unfrozenPlot(plotId) onlyPendingBuyer(plotId)
+    {
+        Deed storage deed = deeds[plotId];
+        address seller = deed.owner;
+        deed.owner = msg.sender;
+        deed.pendingBuyer = address(0);
+        emit TransferCompleted(plotId, seller, msg.sender);
+    }
 }
